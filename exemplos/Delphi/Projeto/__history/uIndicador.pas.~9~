@@ -1,0 +1,223 @@
+unit uIndicador;
+
+interface
+
+uses
+  Windows,
+  System.SysUtils;
+
+type
+  serialF   = function ( port :PAnsiChar ; baudRate : integer ; dataBits : integer ; stopBits : integer ; parity : integer ): integer ; cdecl;
+  tcpF      = function ( ip   :PAnsiChar ; port : integer ): integer ; cdecl;
+  isOpenF   = function () : integer ; cdecl;
+  closeF    = function () : integer ; cdecl;
+  zerarF    = function ( output : PAnsiChar ) : integer ; cdecl;
+  tararF    = function ( modo : integer ; tara : integer ; output : PAnsiChar ) : integer ; cdecl;
+
+  getPesoLiquidoF         = function () : double  ; cdecl;
+  getPesoBrutoF           = function () : double  ; cdecl;
+  getTaraF                = function () : double  ; cdecl;
+  getStatusPesoF          = function () : integer ; cdecl;
+  getStatusBalancaF       = function () : char    ; cdecl;
+  getUnidadeMedidaF       = function () : integer ; cdecl;
+  isModoContadoraDePecasF = function () : integer ; cdecl;
+  getProtocoloF           = function () : integer ; cdecl;
+  getStatusBateriaIndF    = function () : char    ; cdecl;
+  getNivelBateriaIndF     = function () : integer ; cdecl;
+  getNivelBateriaTx1F     = function () : integer ; cdecl;
+  getNivelBateriaTx2F     = function () : integer ; cdecl;
+
+type Indicador = class
+  public
+    constructor newIndicador;
+    destructor deletar;
+
+    function openSerial ( port:RawByteString; baudRate:integer; dataBits:integer; stopBits:integer; parity:integer )  : Boolean;
+    function openTcp    ( ip:RawByteString; port:integer )        : Boolean;
+    function isOpen     ( ) : Boolean;
+    function close      ( ) : Boolean;
+    function zerar      ( output:RawByteString ) : integer;
+    function tarar      ( modo:integer; tara:integer; output:RawByteString ) : integer;
+
+    function getPesoLiquido                 ( ) : double;
+    function getPesoBruto                   ( ) : double;
+    function getTara                        ( ) : double;
+    function getStatusPeso                  ( ) : integer;
+    function getStatusBalanca               ( ) : char;
+    function getUnidadeMedida               ( ) : integer;
+    function isModoContadoraDePecas         ( ) : Boolean;
+    function getProtocolo                   ( ) : integer;
+    function getStatusBateriaIndicador      ( ) : char;
+    function getNivelBateriaIndicador       ( ) : integer;
+    function getNivelBateriaTransmissorTx1  ( ) : integer;
+    function getNivelBateriaTransmissorTx2  ( ) : integer;
+end;
+
+var
+  hDll        : THandle;
+  openCom     : serialF;
+  openRede    : tcpF;
+  conexaoOn   : isOpenF;
+  fechar      : closeF;
+  zera        : zerarF;
+  taraAutMan  : tararF;
+
+  pesoLiquido         : getPesoLiquidoF;
+  pesoBruto           : getPesoBrutoF;
+  tara                : getTaraF;
+  statusPeso          : getStatusPesoF;
+  statusBalanca       : getStatusBalancaF;
+  unidadeMedida       : getUnidadeMedidaF;
+  modoContadoraPecas  : isModoCOntadoraDePecasF;
+  protocolo           : getProtocoloF;
+  statusBateriaInd    : getStatusBateriaIndF;
+  nivelBateriaInd     : getNivelBateriaIndF;
+  nivelBateriaTx1     : getNivelBateriaTx1F;
+  nivelBateriaTx2     : getNivelBateriaTx2F;
+
+implementation
+
+constructor Indicador.newIndicador;
+begin
+  hDll := LoadLibrary('../../../../../lib/indicadorLider32.dll');
+  if hDll <> 0 then
+  begin
+    openCom     := GetProcAddress(hDll, 'openSerial');
+    openRede    := GetProcAddress(hDll, 'openTcp');
+    conexaoOn   := GetProcAddress(hDll, 'isOpen');
+    fechar      := GetProcAddress(hDll, 'close');
+    zera        := GetProcAddress(hDll, 'zerar');
+    taraAutMan  := GetProcAddress(hDll, 'tarar');
+
+    pesoLiquido         := GetProcAddress(hDll, 'getPesoLiquido');
+    pesoBruto           := GetProcAddress(hDll, 'getPesoBruto');
+    tara                := GetProcAddress(hDll, 'getTara');
+    statusPeso          := GetProcAddress(hDll, 'getStatusPeso');
+    statusBalanca       := GetProcAddress(hDll, 'getStatusBalanca');
+    unidadeMedida       := GetProcAddress(hDll, 'getUnidadeMedida');
+    modoContadoraPecas  := GetProcAddress(hDll, 'isModoContadoraDePecas');
+    protocolo           := GetProcAddress(hDll, 'getProtocolo');
+    statusBateriaInd    := GetProcAddress(hDll, 'getStatusBateriaIndicador');
+    nivelBateriaInd     := GetProcAddress(hDll, 'getNivelBateriaIndicador');
+    nivelBateriaTx1     := GetProcAddress(hDll, 'getNivelBateriaTransmissorTx1');
+    nivelBateriaTx2     := GetProcAddress(hDll, 'getNivelBateriaTransmissorTx2');
+  end
+  else
+  begin
+    Writeln('Error code: ' + IntToStr(GetLastError()));
+  end;
+end;
+
+destructor Indicador.deletar;
+begin
+  if isOpen() then
+    close();
+  FreeLibrary(hDll);
+end;
+
+function Indicador.openSerial(port:RawByteString; baudRate:integer; dataBits:integer; stopBits:integer; parity:integer): Boolean;
+begin
+  if openCom(PAnsiChar(PAnsiString(port)), baudRate, dataBits, stopBits, parity) >= 1 then
+    result := True
+  else
+    result := False;
+end;
+
+function Indicador.openTcp(ip: RawByteString; port: integer): Boolean;
+begin
+  if openRede(PAnsiChar(PAnsiString(ip)), port) >= 1 then
+    result := True
+  else
+    result := False;
+end;
+
+function Indicador.isOpen: Boolean;
+begin
+  if conexaoOn >= 1 then
+    result := True
+  else
+    result := False;
+end;
+
+function Indicador.close: Boolean;
+begin
+  if fechar() >= 1 then
+    result := True
+  else
+    result := False;
+end;
+
+function Indicador.zerar(output:RawByteString): Integer;
+begin
+  result := zera(PAnsiChar(PAnsiString(output)));
+end;
+
+function Indicador.tarar(modo:integer; tara:integer; output:RawByteString): Integer;
+begin
+  result := taraAutMan(modo, tara, PAnsiChar(PAnsiString(output)));
+end;
+
+function Indicador.getPesoLiquido: Double;
+begin
+  result := pesoLiquido();
+end;
+
+function Indicador.getPesoBruto: Double;
+begin
+  result := pesoBruto();
+end;
+
+function Indicador.getTara: Double;
+begin
+  result := tara();
+end;
+
+function Indicador.getStatusPeso: Integer;
+begin
+  result := statusPeso();
+end;
+
+function Indicador.getStatusBalanca: Char;
+begin
+  result := statusBalanca();
+end;
+
+function Indicador.getUnidadeMedida: Integer;
+begin
+  result := unidadeMedida();
+end;
+
+function Indicador.isModoContadoraDePecas: Boolean;
+begin
+  if modoContadoraPecas >= 1 then
+    result := True
+  else
+    result := False;
+end;
+
+function Indicador.getProtocolo: Integer;
+begin
+  result := protocolo();
+end;
+
+function Indicador.getStatusBateriaIndicador: Char;
+begin
+  result := statusBateriaInd();
+end;
+
+function Indicador.getNivelBateriaIndicador: Integer;
+begin
+  result := nivelBateriaInd();
+end;
+
+function Indicador.getNivelBateriaTransmissorTx1: Integer;
+begin
+  result := nivelBateriaTx1();
+end;
+
+function Indicador.getNivelBateriaTransmissorTx2: Integer;
+begin
+  result := nivelBateriaTx2();
+end;
+
+end.

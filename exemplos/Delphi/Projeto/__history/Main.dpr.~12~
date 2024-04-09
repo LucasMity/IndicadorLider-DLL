@@ -1,0 +1,219 @@
+program Main;
+
+uses
+  Windows,
+  System.SysUtils,
+  uIndicador in 'uIndicador.pas';
+
+function Check(resp: Integer): Boolean;
+begin
+  case resp of
+    1:
+    begin
+      Writeln('Sucesso.');
+      Result := True;
+    end;
+    2:
+    begin
+      Writeln('Tara Semiautomatica.');
+      Result := True;
+    end;
+    3:
+    begin
+      Writeln('Limpeza de tara manual.');
+      Result := True;
+    end;
+    4:
+    begin
+       Writeln('Tara sucessiva.');
+       Result := True;
+    end;
+    5:
+    begin
+      Writeln('Limpeza de tara.');
+      Result := True;
+    end;
+    6:
+    begin
+      Writeln('Tara manual.');
+      Result := True;
+    end;
+    0:
+    begin
+      Writeln('Erro.');
+      Result := False;
+    end;
+    -1:
+    begin
+      Writeln('ERRO TARA: Peso maior do que a capacidade.');
+      Result := False;
+    end;
+    -2:
+    begin
+      Writeln('ERRO TARA: Tara ja ativa.');
+      Result := False;
+    end;
+    -3:
+    begin
+      Writeln('ERRO TARA: Tara automatica ativa.');
+      Result := False;
+    end;
+    -4:
+    begin
+      Writeln('ERRO TARA: Tara manual com peso na celula.');
+      Result := False;
+    end;
+    -5:
+    begin
+      Writeln('ERRO TARA: Peso de pico ativo.');
+      Result := False;
+    end;
+    -6:
+    begin
+      Writeln('ERRO TARA: Peso nulo.');
+      Result := False;
+    end;
+    -7:
+    begin
+      Writeln('ERRO TARA: Tara sucessiva sem peso.');
+      Result := False;
+    end;
+    -8:
+    begin
+      Writeln('ERRO TARA: Peso negativo.');
+      Result := False;
+    end;
+    -9:
+    begin
+      Writeln('ERRO: Comunicacao ja esta fechada.');
+      Result := False;
+    end;
+    -10:
+    begin
+      Writeln('ERRO: Comunicacao ja esta aberta.');
+      Result := False;
+    end;
+    -11:
+    begin
+      Writeln('ERRO Timeout.');
+      Result := False;
+    end;
+    else
+    begin
+      Writeln('Valor de retorno nao reconhecido.');
+      Result := False;
+    end;
+  end;
+end;
+
+function ConfereExcessoPeso(excesso: Integer): Boolean;
+begin
+  case excesso of
+    -2:
+      begin
+        Writeln('EXCESSO DE PESO POSITIVO.');
+        Result := False;
+      end;
+    -1:
+      begin
+        Writeln('EXCESSO DE PESO NEGATIVO.');
+        Result := False;
+      end;
+    0:
+      Result := False;
+    1:
+      Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+var
+  indicador: uIndicador.Indicador;
+  opc : integer;
+  tara : integer;
+
+begin
+  indicador := uIndicador.Indicador.Create;
+  try
+    indicador.newIndicador();
+
+    {if indicador.openSerial('COM4', 9600) then} if indicador.openTcp('10.20.0.200', 502) then
+    begin
+      Writeln('Conexao aberta com sucesso.');
+
+      opc := 1;
+
+      while opc <> 0 do
+      begin
+        Write('1 - ZERAR' + sLineBreak +
+              '2 - MOSTRAR DADOS' + sLineBreak +
+              '3 - TARAR AUTOMATICO' + sLineBreak +
+              '4 - TARAR MANUAL' + sLineBreak +
+              '0 - SAIR' + sLineBreak +
+              'Opcao: ');
+        Readln(opc);
+
+        case opc of
+          1:
+            Check(indicador.zerar());
+          2:
+          begin
+            if ConfereExcessoPeso(indicador.getStatusPeso()) then
+              begin
+                WriteLn('Peso Liquido: ', Format('%0:.3f', [indicador.getPesoLiquido()]));
+                WriteLn('Peso Bruto  : ', Format('%0:.3f', [indicador.getPesoBruto()]));
+                WriteLn('Tara        : ', Format('%0:.3f', [indicador.getTara()]));
+              end;
+
+            WriteLn('Status      : ', indicador.getStatusBalanca());
+            Write('Is Modo Contadora de Pecas?  ');
+            if indicador.isModoContadoraDePecas() then
+              WriteLn('SIM')
+            else
+              WriteLn('NAO');
+
+            WriteLn('PROTOCOLO LIDER ', indicador.getProtocolo());
+            Write('UNIDADE DE MEDIDA: ');
+            case indicador.getUnidadeMedida() of
+              1: WriteLn('KG');
+              2: WriteLn('LB');
+              3: WriteLn('KN');
+            else
+              WriteLn('Desconhecido');
+            end;
+
+            WriteLn('BATERIA INDICADOR: [STATUS = ', indicador.getStatusBateriaIndicador(), '] [NIVEL = ', indicador.getNivelBateriaIndicador(), ']');
+            WriteLn('BATERIA TRANSMISSORTX1: [NIVEL = ', indicador.getNivelBateriaTransmissorTx1(), ']');
+            WriteLn('BATERIA TRANSMISSORTX2: [NIVEL = ', indicador.getNivelBateriaTransmissorTx2(), ']');
+          end;
+          3:
+            Check(indicador.tarar());
+          4:
+          begin
+            Write('TARA: ');
+            Readln(tara);
+            Check(indicador.tararManual(tara));
+          end;
+          0:
+            Writeln('Saindo...');
+          else
+            Writeln('Opcao invalida.');
+        end;
+
+      end;
+
+    end
+    else
+    begin
+      Writeln('Nao foi possivel abrir a conexao.');
+    end;
+
+    indicador.deletar();
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+  indicador.Free();
+  Sleep(2000);
+end.

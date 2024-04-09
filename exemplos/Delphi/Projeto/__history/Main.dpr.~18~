@@ -1,0 +1,155 @@
+program Main;
+
+uses
+  Windows,
+  System.SysUtils,
+  uIndicador in 'uIndicador.pas';
+
+function Check(resp: Integer): Boolean;
+begin
+  case resp of
+    1:
+    begin
+      Writeln('SUCESSO.');
+      Result := True;
+    end;
+    0:
+    begin
+      Writeln('ERRO.');
+      Result := False;
+    end;
+    -1:
+    begin
+      Writeln('TIMEOUT.');
+      Result := False;
+    end;
+    else
+    begin
+      Writeln('Valor ', resp ,' retornado.');
+      Result := False;
+    end;
+  end;
+end;
+
+function ConfereExcessoPeso(excesso: Integer): Boolean;
+begin
+  case excesso of
+    -2:
+      begin
+        Writeln('EXCESSO DE PESO POSITIVO.');
+        Result := False;
+      end;
+    -1:
+      begin
+        Writeln('EXCESSO DE PESO NEGATIVO.');
+        Result := False;
+      end;
+    0:
+      Result := False;
+    1:
+      Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+var
+  indicador: uIndicador.Indicador;
+  opc : integer;
+  tara : integer;
+  output: PAnsiChar;
+
+begin
+  indicador := uIndicador.Indicador.Create;
+  try
+    indicador.newIndicador();
+
+    {if indicador.openSerial('COM4', 9600) then} if indicador.openTcp('10.20.0.200', 502) then
+    begin
+      Writeln('Conexao aberta com sucesso.');
+
+      opc := 1;
+
+      while opc <> 0 do
+      begin
+        Write('1 - ZERAR' + sLineBreak +
+              '2 - MOSTRAR DADOS' + sLineBreak +
+              '3 - TARAR AUTOMATICO' + sLineBreak +
+              '4 - TARAR MANUAL' + sLineBreak +
+              '5 - GERAR RELATORIO COM AS 10K ULTIMAS IMPRESSOES' + sLineBreak +
+              '0 - SAIR' + sLineBreak +
+              'Opcao: ');
+        Readln(opc);
+
+        case opc of
+          1:
+          begin
+            Check(indicador.zerar());
+          end;
+          2:
+          begin
+            if ConfereExcessoPeso(indicador.getStatusPeso()) then
+              begin
+                WriteLn('Peso Liquido: ', Format('%0:.3f', [indicador.getPesoLiquido()]));
+                WriteLn('Peso Bruto  : ', Format('%0:.3f', [indicador.getPesoBruto()]));
+                WriteLn('Tara        : ', Format('%0:.3f', [indicador.getTara()]));
+              end;
+
+            WriteLn('Status      : ', indicador.getStatusBalanca());
+            Write('Is Modo Contadora de Pecas?  ');
+            if indicador.isModoContadoraDePecas() then
+              WriteLn('SIM')
+            else
+              WriteLn('NAO');
+
+            WriteLn('PROTOCOLO LIDER ', indicador.getProtocolo());
+            Write('UNIDADE DE MEDIDA: ');
+            case indicador.getUnidadeMedida() of
+              2: WriteLn('KG');
+              1: WriteLn('LB');
+              0: WriteLn('KN');
+            else
+              WriteLn('Desconhecido');
+            end;
+
+            WriteLn('BATERIA INDICADOR: [STATUS = ', indicador.getStatusBateriaIndicador(), '] [NIVEL = ', indicador.getNivelBateriaIndicador(), ']');
+            WriteLn('BATERIA TRANSMISSORTX1: [NIVEL = ', indicador.getNivelBateriaTransmissorTx1(), ']');
+            WriteLn('BATERIA TRANSMISSORTX2: [NIVEL = ', indicador.getNivelBateriaTransmissorTx2(), ']');
+          end;
+          3:
+          begin
+            Check(indicador.tarar(0, 0));
+          end;
+          4:
+          begin
+            Write('TARA: ');
+            Readln(tara);
+            Check(indicador.tarar(1, tara));
+          end;
+          5:
+          begin
+            output := indicador.gerarRelatorio(0, '10000');
+            WriteLn(output);
+          end;
+          0:
+            Writeln('Saindo...');
+          else
+            Writeln('Opcao invalida.');
+        end;
+
+      end;
+
+    end
+    else
+    begin
+      Writeln('Nao foi possivel abrir a conexao.');
+    end;
+
+    indicador.deletar();
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+  indicador.Free();
+  Sleep(2000);
+end.
