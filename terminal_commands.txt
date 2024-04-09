@@ -1,3 +1,0 @@
-gcc -m32 -shared ./indicador/indicador.c ./serial/serial.c ./tcp/tcp.c -o ./lib/indicadorLider32.dll C:\msys64\mingw32\lib\libserialport.a -lws2_32 -ladvapi32 -lkernel32 -lMSVCRT -lsetupapi -static-libgcc
-gcc -m64 -shared ./indicador/indicador.c ./serial/serial.c ./tcp/tcp.c -o ./lib/indicadorLider64.dll C:\msys64\mingw64\lib\libserialport.a -lws2_32 -ladvapi32 -lkernel32 -lMSVCRT -lsetupapi -static-libgcc
-
