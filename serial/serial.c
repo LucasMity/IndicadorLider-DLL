@@ -2,15 +2,34 @@
 
 int serial_open ( const char* portName, int baudRate, int dataBits, int stopBits, int parity )
 {
+    int lenPortName = 0;
+    char* portNameFormatada;
+ 
+    if ( (strncmp(portName, "COM", 3) == 0) && ((lenPortName = strlen(portName)) > 4) ) {
+        portNameFormatada = (char*) malloc(sizeof(char)*(lenPortName+5)); // Adicionar prefixo \\.\ para portas maiores do que COM9
+        if (portNameFormatada) {
+            sprintf(portNameFormatada, "\\\\.\\%s", portName);
+        } else {
+            return ERRO_MEMORY;
+        }
+    } else {
+        portNameFormatada = (char*) malloc(sizeof(char)*(lenPortName+1));
+        if (portNameFormatada) {
+            strncpy(portNameFormatada, portName, lenPortName);
+            portNameFormatada[lenPortName] = '\0';
+        } else {
+            return ERRO_MEMORY;
+        }
+    }
 
-    serialPort = CreateFile(portName,                           // address of name of the communications device
+    serialPort = CreateFile(portNameFormatada,                  // address of name of the communications device
                             GENERIC_READ | GENERIC_WRITE,       // access mode
                             0,                                  // share mode
                             NULL,                               // address of security descriptor
                             OPEN_EXISTING,                      // how to create
                             FILE_FLAG_OVERLAPPED,               // file attributes
                             NULL );                             // handle of file with attributes to copy
-
+    free(portNameFormatada);
     if (serialPort == INVALID_HANDLE_VALUE)
     {
         return ERRO_INVALID_ARG;

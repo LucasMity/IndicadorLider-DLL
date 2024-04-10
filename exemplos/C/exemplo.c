@@ -130,7 +130,7 @@ int main () {
         && getConfiguracao && setConfiguracao && saveConfiguracao 
         && getTabelaProdutos && cadastrarProduto && ERFproduto && deletarProduto && gerarRelatorio && deletarTabelaProdutos)
         {   // Verifica se todas as funcoes foram carregadas corretamente
-            //check(openSerial("COM4", 9600, 8, 1, 0)); // Abre comunicacao Serial
+            // check(openSerial("COM4", 9600, 8, 1, 0)); // Abre comunicacao Serial
             check(openTcp("10.20.0.200", 502)); // Abre comunicacao TCP
             
             while(opc != 0) {
