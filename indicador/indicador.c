@@ -1101,10 +1101,10 @@ static void filterStringValues( char* buffer )
     else { return; }  
     
     char bufferCopy[MAX_BUFFER_SIZE];
+    int size = 0; // Quantidade de valores apos o split
     strcpy(bufferCopy, buffer);
 
     token = strtok(bufferCopy, separator); // Split
-    int size = 0; // Quantidade de valores apos o split
 
     for ( i = 0; token != NULL && i < MAX_QTD_VALUES; i++ )
     {
@@ -1112,7 +1112,7 @@ static void filterStringValues( char* buffer )
         size++;
         token = strtok(NULL, separator);
     }
-
+    
     if (size < 2) { return; } // Verifica se obteve a quantidade minima de valores, 2 (Peso, Status)
 
     // Busca o indice do valor de StatusBalanca
@@ -1193,35 +1193,35 @@ static void filterStringValues( char* buffer )
         }      
     } // FIM TRATAMENTO DE DADOS ADICIONAIS
 
-    if ((valuesIndicador.protocolo == PROTOCOLO_LIDER_2) && size >= (indiceStatus + 1) ) // PROTOCOLO LIDER 10
+    if ((valuesIndicador.protocolo == PROTOCOLO_LIDER_2) && size >= (indiceStatus + 1) ) // VERIFICA PROTOCOLO LIDER 10
     {
-        int isProtocolo10 = TRUE;
-        if ((indiceStatus+1 < size) && verificaData(values[indiceStatus + 1])) // CAMPO DE DATA
+        if ( ((indiceStatus+1 < size) && verificaData(values[indiceStatus + 1])) &&
+             ((indiceStatus+2 < size) && verificaHora(values[indiceStatus + 2])) ) // CAMPO DE DATA E HORA OBRIGATORIOS
         {
             strncpy(valuesIndicador.data, values[indiceStatus + 1], DATA_LEN+1);
             valuesIndicador.data[DATA_LEN] = '\0';
-
-        } else {isProtocolo10 = FALSE;}
-
-        if ((indiceStatus+2 < size) && verificaHora(values[indiceStatus + 2])) // CAMPO DE HORA
-        {
             strncpy(valuesIndicador.hora, values[indiceStatus + 2], HORA_LEN+1);
             valuesIndicador.hora[HORA_LEN] = '\0';
 
-        } else {isProtocolo10 = FALSE;}
-
-        if ((indiceStatus+3 < size) && verificaCodigoProduto(values[indiceStatus + 3])) // CAMPO DE CODIGO
-        {
-            strncpy(valuesIndicador.codigoProduto, values[indiceStatus + 3], CODIGO_PRODUTO_LEN+1);
-            valuesIndicador.codigoProduto[CODIGO_PRODUTO_LEN] = '\0';
-        }
-
-        if (isProtocolo10)
-        {
             valuesIndicador.protocolo = PROTOCOLO_LIDER_10;
-            if (size > 7) // Verifica se possui checksum
+            if (strstr(buffer, "               ")) // Verifica se o espaco para o codigo esta vazio
+            { // Se sim
+                if (indiceStatus+3 < size)// Verifica se ha checksum
+                { 
+                    if (!checksum2Compl(buffer, separator[0])) {return;}
+                }
+            } else // Se nao
             {
-                if (!checksum2Compl(buffer, separator[0])) {return;}
+                if ((indiceStatus+3 < size) && verificaCodigoProduto(values[indiceStatus + 3])) // CAMPO DE CODIGO
+                {
+                    strncpy(valuesIndicador.codigoProduto, values[indiceStatus + 3], CODIGO_PRODUTO_LEN+1);
+                    valuesIndicador.codigoProduto[CODIGO_PRODUTO_LEN] = '\0';
+                }
+
+                if (indiceStatus+4 < size) // CAMPO CHECKSUM
+                {
+                    if (!checksum2Compl(buffer, separator[0])) {return;}
+                }
             }
         }
     }

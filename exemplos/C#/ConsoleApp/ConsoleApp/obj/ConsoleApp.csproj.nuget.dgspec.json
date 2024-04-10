@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lucas Mity\\Desktop\\Indicador_DLL_Final\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj": {}
+    "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lucas Mity\\Desktop\\Indicador_DLL_Final\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj": {
+    "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas Mity\\Desktop\\Indicador_DLL_Final\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
         "projectName": "ConsoleApp",
-        "projectPath": "C:\\Users\\Lucas Mity\\Desktop\\Indicador_DLL_Final\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
+        "projectPath": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
         "packagesPath": "C:\\Users\\Lucas Mity\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas Mity\\Desktop\\Indicador_DLL_Final\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\obj\\",
+        "outputPath": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -60,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

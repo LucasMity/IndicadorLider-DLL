@@ -36,3 +36,15 @@ C:\Users\Lucas Mity\Desktop\Indicador_DLL_Final\exemplos\C#\ConsoleApp\ConsoleAp
 C:\Users\Lucas Mity\Desktop\Indicador_DLL_Final\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net7.0\ConsoleApp.dll
 C:\Users\Lucas Mity\Desktop\Indicador_DLL_Final\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.genruntimeconfig.cache
 C:\Users\Lucas Mity\Desktop\Indicador_DLL_Final\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ref\ConsoleApp.dll
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net7.0\ConsoleApp.exe
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net7.0\ConsoleApp.deps.json
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net7.0\ConsoleApp.runtimeconfig.json
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net7.0\ConsoleApp.dll
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.AssemblyInfoInputs.cache
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.AssemblyInfo.cs
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.dll
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\refint\ConsoleApp.dll
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ConsoleApp.genruntimeconfig.cache
+C:\Users\Lucas Mity\Documents\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net7.0\ref\ConsoleApp.dll
