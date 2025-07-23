@@ -99,6 +99,7 @@ INDICADOR_API int zerar ( )
     int resp, elapsed_time = 0;
     setZeroResponse(WAITING_RESPONSE);
     resp = indicadorSend( "#ZERO\r\n" ); // Envia comando
+    //resp = indicadorSend() || resp; // Comando Zero para 2052
     if (resp == OK) // espera resposta se comando for enviado com sucesso
     { 
         while ((resp = getZeroResponse()) == WAITING_RESPONSE && (elapsed_time * WAIT_RESPONSE < TIMEOUT))
@@ -863,8 +864,11 @@ static unsigned __stdcall runIndicador( void* pArguments )
             }
             continue;
         }
-        else if (strstr(buffer, "#SPS" ) || strstr(buffer, "#SPC" ) || 
-                strstr(buffer, "#STLP" ) || strstr(buffer, "#STLC" )) // MEIO RELATORIO 
+        else if (strstr(buffer, "#SPS" ) || strstr(buffer, "#SPC" ) || // REGISTROS
+                strstr(buffer, "#STLP" ) || strstr(buffer, "#STLC" ) || strstr(buffer, "#STL") || // TOTAL
+                strstr(buffer, "#SDT") || // INFO INICIAIS 2000EP
+                strstr(buffer, "#SAP") // INFO APARTACAO
+            ) // MEIO RELATORIO 
         {
             relatorioStringLen += bufferLen + 1; // espaco extra para \n
             relatorioString = realloc(relatorioString, sizeof(char) * relatorioStringLen);
@@ -926,6 +930,23 @@ static unsigned __stdcall runIndicador( void* pArguments )
             strstr(buffer, "#ENDCP" ) || strstr(buffer, "#ENDCLRCP" ) || strstr(buffer, "#ACKEXEND" )) // FIM PRODUTO 
         {
             setProdutoResponse(OK, 1);
+            continue;
+        }
+        else if( strstr(buffer, "#") )
+        {
+            configStringLen = bufferLen + 1; // espaco extra para \0
+            configString = (char*)malloc(sizeof(char) * configStringLen);
+            if (configString != NULL) 
+            {
+                memset(configString, '\0', configStringLen);
+                strcpy(configString, buffer);
+                setConfigResponse(OK);
+            } 
+            else 
+            {
+                setConfigResponse(ERRO_MEMORY);
+                freeStringResponse(&configString, &configStringLen);
+            }
             continue;
         }
         // }

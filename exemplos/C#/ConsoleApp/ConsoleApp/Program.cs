@@ -18,7 +18,7 @@ namespace Lider
             STATUS_BALANCA_IMPRIME = 6,
         }
 
-        const String dllDir = "../../../../../../../lib/indicadorLider64.dll";
+        const String dllDir = "../../../../../../../lib/x64/indicadorLider.dll";
         [DllImport(dllDir, CharSet = CharSet.Ansi)]
         public static extern int openSerial(string port, int baudRate, int dataBits, int stopBits, int parity);
 

@@ -53,7 +53,7 @@ int main () {
     int taraValor, precisao;
     char* tabela;
 
-    HINSTANCE hDll = LoadLibrary("../../lib/indicadorLider32.dll"); // Carrega a DLL
+    HINSTANCE hDll = LoadLibrary("../../lib/x86/indicadorLider.dll"); // Carrega a DLL
     if (hDll != NULL) { // Verifica se a DLL foi carregada corretamente
         // Carrega cada uma das funcoes
         openSerialFunction openSerial = reinterpret_cast<openSerialFunction>(GetProcAddress(hDll, "openSerial"));

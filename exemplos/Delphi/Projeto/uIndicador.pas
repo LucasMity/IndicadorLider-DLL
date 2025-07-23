@@ -85,7 +85,7 @@ implementation
 
 constructor Indicador.newIndicador;
 begin
-  hDll := LoadLibrary('../../../../../lib/indicadorLider32.dll');
+  hDll := LoadLibrary('../../../../../lib/x86/indicadorLider.dll');
   if hDll <> 0 then
   begin
     openCom     := GetProcAddress(hDll, 'openSerial');

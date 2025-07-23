@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
+      "projectUniqueName": "D:\\Projetos\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
       "projectName": "ConsoleApp",
-      "projectPath": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
+      "projectPath": "D:\\Projetos\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj",
       "packagesPath": "C:\\Users\\Lucas Mity\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lucas Mity\\Documents\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\obj\\",
+      "outputPath": "D:\\Projetos\\Projetos\\Indicador_DLL\\exemplos\\C#\\ConsoleApp\\ConsoleApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -51,7 +51,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net7.0": {
@@ -72,7 +73,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

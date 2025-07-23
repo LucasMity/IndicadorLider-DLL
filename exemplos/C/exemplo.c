@@ -90,7 +90,7 @@ int main () {
     dadosIndicador dados;
 
     // Verificando se cada um dos valores é diferente de NULL
-    HMODULE hDll = LoadLibrary("../../lib/indicadorLider32.dll"); // Carrega DLL
+    HMODULE hDll = LoadLibrary("../../lib/x86/indicadorLider.dll"); // Carrega DLL
     if (hDll != NULL) { // Verifica se a DLL foi carregada corretamente
         // Carrega as funcoes da DLL que serao utilizadas
         openSerialFunction openSerial = (openSerialFunction)GetProcAddress(hDll, "openSerial");
