@@ -1,0 +1,12 @@
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net10.0\ConsoleApp.exe
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net10.0\ConsoleApp.deps.json
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net10.0\ConsoleApp.runtimeconfig.json
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\bin\Debug\net10.0\ConsoleApp.dll
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.AssemblyInfoInputs.cache
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.AssemblyInfo.cs
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.csproj.CoreCompileInputs.cache
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.dll
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\refint\ConsoleApp.dll
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ConsoleApp.genruntimeconfig.cache
+D:\Projetos\Indicador_DLL\exemplos\C#\ConsoleApp\ConsoleApp\obj\Debug\net10.0\ref\ConsoleApp.dll

@@ -171,7 +171,21 @@ typedef struct dadosIndicador {
     char     hora[HORA_LEN+1];
 } dadosIndicador;
 
-static dadosIndicador indicador;
+static dadosIndicador indicador = { .pesoLiquido=0,
+                                    .pesoBruto=0,
+                                    .tara=0,
+                                    .precisaoDecimalPeso=0,
+                                    .statusBalanca = STATUS_BALANCA_DESCONHECIDO,
+                                    .unidadeMedida = UNIDADE_MEDIDA_DESCONHECIDO,
+                                    .isModoContadoraPecas = FALSE,
+                                    .protocolo = PROTOCOLO_DESCONHECIDO,
+                                    .statusBateriaIndicador = STATUS_BATERIA_DESCONHECIDO,
+                                    .nivelBateriaIndicador = NIVEL_BATERIA_DESCONHECIDO,
+                                    .nivelBateriaTransmissorTx1 = NIVEL_BATERIA_DESCONHECIDO,
+                                    .nivelBateriaTransmissorTx2 = NIVEL_BATERIA_DESCONHECIDO,
+                                    .codigoProduto="\0",
+                                    .data="\0",
+                                    .hora="\0"};
 
 // VARIAVEIS DE CONTROLE
 static int relatorioResponse    = DEFAULT_RESPONSE;

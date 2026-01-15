@@ -95,7 +95,7 @@ namespace Lider
         static void Main(string[] args)
         {
             //openSerial("COM4", 9600, 8, 1, 0);
-            openTcp("10.20.0.200", 502);
+            openTcp("127.0.0.1", 3500);
             int opc = 1, tara;
             string output;
             int precisao;
