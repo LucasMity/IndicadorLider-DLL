@@ -767,7 +767,7 @@ static unsigned __stdcall runIndicador( void* pArguments )
 {
     char buffer[MAX_BUFFER_SIZE];
     int pos = 0, bufferLen = 0, respAux;
-   
+
     while ( isOpen() && !(getIsClosing()) ) 
     {
         pos = 0; 
