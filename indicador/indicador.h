@@ -138,8 +138,8 @@ enum ind_imprime {
 #define TRUE 1
 #define FALSE 0
 
-#define TIMEOUT 300
-#define LONG_TIMEOUT 15*TIMEOUT
+#define TIMEOUT 500
+#define LONG_TIMEOUT 9*TIMEOUT
 #define WAIT_RESPONSE 5
 #define WAIT_READY 100
 
