@@ -1109,17 +1109,17 @@ static void filterStringValues( char* buffer )
         memset(values[i], '\0', MAX_BUFFER_SIZE);
     }
 
-    if ( strchr(buffer, ' ') != NULL ) // Identifica o tipo de delimitador
+    if ( strchr(buffer, ',') != NULL )  // Identifica o tipo de delimitador
+    {
+        strcpy(separator, ",");
+        valuesIndicador.protocolo = PROTOCOLO_LIDER_4;
+    } 
+    // if ( strchr(buffer, ' ') != NULL )
+    else
     { 
         strcpy(separator, " ");
         valuesIndicador.protocolo = PROTOCOLO_LIDER_2;
     }
-    else if ( strchr(buffer, ',') != NULL )
-    {
-        strcpy(separator, ",");
-        valuesIndicador.protocolo = PROTOCOLO_LIDER_4;
-    }
-    else { return; }  
     
     char bufferCopy[MAX_BUFFER_SIZE];
     int size = 0; // Quantidade de valores apos o split
@@ -1134,7 +1134,16 @@ static void filterStringValues( char* buffer )
         token = strtok(NULL, separator);
     }
     
-    if (size < 2) { return; } // Verifica se obteve a quantidade minima de valores, 2 (Peso, Status)
+    if (size < 2) // Verifica se obteve a quantidade minima de valores, 2 (Peso, Status)
+    {
+        if(size == 1) // Protocolo sem separador
+        {
+            values[1][0] = values[0][strlen(values[0])-1];
+            values[0][strlen(values[0])-1] = '\0';
+        }
+        else
+        { return; } 
+    }
 
     // Busca o indice do valor de StatusBalanca
     if (strpbrk(values[1], "EIPMARG"))

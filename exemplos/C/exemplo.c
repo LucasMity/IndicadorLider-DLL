@@ -90,7 +90,9 @@ int main () {
     dadosIndicador dados;
 
     // Verificando se cada um dos valores é diferente de NULL
-    HMODULE hDll = LoadLibrary("../../lib/x86/indicadorLider.dll"); // Carrega DLL
+    HMODULE hDll86 = LoadLibrary("../../lib/x86/indicadorLider.dll"); // Carrega DLL
+    HMODULE hDll64 = LoadLibrary("../../lib/x64/indicadorLider.dll"); // Carrega DLL
+    HMODULE hDll = (hDll86 == NULL ? hDll64 : hDll86);
     if (hDll != NULL) { // Verifica se a DLL foi carregada corretamente
         // Carrega as funcoes da DLL que serao utilizadas
         openSerialFunction openSerial = (openSerialFunction)GetProcAddress(hDll, "openSerial");
@@ -131,7 +133,7 @@ int main () {
         && getTabelaProdutos && cadastrarProduto && ERFproduto && deletarProduto && gerarRelatorio && deletarTabelaProdutos)
         {   // Verifica se todas as funcoes foram carregadas corretamente
             // check(openSerial("COM4", 9600, 8, 1, 0)); // Abre comunicacao Serial
-            check(openTcp("10.20.0.200", 502)); // Abre comunicacao TCP
+            check(openTcp("127.0.0.1", 3500)); // Abre comunicacao TCP
             
             while(opc != 0) {
                 printf("1 - MOSTRAR VALORES\n2 - ZERAR\n3 - TARAR\n4 - TARAR MANUAL\n5 - CONSULTAR CONFIG\n6 - ALTERAR CONFIG\n7 - CADASTRAR PRODUTO\n8 - LISTAR PRODUTOS\n9 - DELETAR PRODUTO\n10 - GERAR RELATORIO\n11 - DELETAR LISTA DE PRODUTOS\n12 - PERGUNTAR PESO\n13 - IMPRIMIR/CALCULAR MEDIA\n0 - SAIR\nOPC: ");
